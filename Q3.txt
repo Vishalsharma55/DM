@@ -1,0 +1,39 @@
+Q3.Write a Program that generates all the permutations of a given set of digits, with or without repetition.
+
+SOLUTION:-
+
+import itertools
+
+def generate_permutations(digits, length=None, repeat=False):
+    """
+    Generate permutations of the given digits.
+
+    :param digits: List or string of digits (e.g., [1,2,3] or "123")
+    :param length: Length of permutations (defaults to len(digits) if None)
+    :param repeat: If True, allows repetition of digits
+    :return: List of permutations
+    """
+    digits = list(map(str, digits))
+    length = length or len(digits)
+
+    if repeat:
+        perms = itertools.product(digits, repeat=length)
+    else:
+        perms = itertools.permutations(digits, length)
+
+    return [''.join(p) for p in perms]
+
+# Example usage
+if __name__ == "__main__":
+    digits = input("Enter digits (no space): ")
+    choice = input("Allow repetition? (y/n): ").lower()
+    k = int(input("Length of each permutation: "))
+
+    allow_repetition = True if choice == 'y' else False
+    permutations = generate_permutations(digits, length=k, repeat=allow_repetition)
+
+    print("\nGenerated Permutations:")
+    for p in permutations:
+        print(p)
+
+    print(f"\nTotal: {len(permutations)} permutations.")
