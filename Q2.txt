@@ -1,0 +1,66 @@
+Q2.Create a class RELATION, use Matrix notation to represent a relation. Include
+member functions to check if the relation is Reflexive, Symmetric, Anti-symmetric,
+Transitive. Using these functions check whether the given relation is: Equivalence or
+Partial Order relation or None....
+
+SOLUTION:-
+
+
+import numpy as np
+
+class RELATION:
+    def __init__(self, matrix):
+        self.matrix = np.array(matrix)
+        self.n = self.matrix.shape[0]
+
+    def is_reflexive(self):
+        for i in range(self.n):
+            if self.matrix[i][i] != 1:
+                return False
+        return True
+
+    def is_symmetric(self):
+        return np.array_equal(self.matrix, self.matrix.T)
+
+    def is_antisymmetric(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                if i != j and self.matrix[i][j] == 1 and self.matrix[j][i] == 1:
+                    return False
+        return True
+
+    def is_transitive(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                if self.matrix[i][j]:
+                    for k in range(self.n):
+                        if self.matrix[j][k] and not self.matrix[i][k]:
+                            return False
+        return True
+
+    def relation_type(self):
+        reflexive = self.is_reflexive()
+        symmetric = self.is_symmetric()
+        antisymmetric = self.is_antisymmetric()
+        transitive = self.is_transitive()
+
+        if reflexive and symmetric and transitive:
+            return "Equivalence Relation"
+        elif reflexive and antisymmetric and transitive:
+            return "Partial Order Relation"
+        else:
+            return "None"
+
+# Example usage
+if __name__ == "__main__":
+    matrix = [
+        [1, 1, 0],
+        [1, 1, 0],
+        [0, 0, 1]
+    ]
+    R = RELATION(matrix)
+    print("Reflexive:", R.is_reflexive())
+    print("Symmetric:", R.is_symmetric())
+    print("Anti-symmetric:", R.is_antisymmetric())
+    print("Transitive:", R.is_transitive())
+    print("Relation Type:", R.relation_type())
