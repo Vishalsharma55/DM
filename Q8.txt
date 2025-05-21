@@ -1,0 +1,32 @@
+Q8.Write a Program to accept a directed graph G and compute the in-degree and out-degree of each vertex.
+
+SOLUTION:-
+
+def compute_degrees(adj_matrix):
+    n = len(adj_matrix)
+    in_degrees = [0] * n
+    out_degrees = [0] * n
+
+    for i in range(n):
+        for j in range(n):
+            if adj_matrix[i][j] == 1:
+                out_degrees[i] += 1  # Edge from i to j
+                in_degrees[j] += 1   # Edge to j from i
+
+    return in_degrees, out_degrees
+
+# Example usage
+if __name__ == "__main__":
+    n = int(input("Enter the number of vertices: "))
+    print("Enter the adjacency matrix (row by row):")
+    adj_matrix = []
+
+    for _ in range(n):
+        row = list(map(int, input().split()))
+        adj_matrix.append(row)
+
+    in_deg, out_deg = compute_degrees(adj_matrix)
+
+    print("\nVertex\tIn-Degree\tOut-Degree")
+    for i in range(n):
+        print(f"{i}\t{in_deg[i]}\t\t{out_deg[i]}")
