@@ -1,0 +1,26 @@
+Q7.Write a Program to check if a given graph is a complete graph. Represent the graph using the Adjacency List representation.
+
+SOLUTION:-
+
+def is_complete_graph(adj_list):
+    n = len(adj_list)
+    for vertex in adj_list:
+        # Check if each vertex has exactly n - 1 connections
+        if len(adj_list[vertex]) != n - 1:
+            return False
+    return True
+
+# Example usage
+if __name__ == "__main__":
+    n = int(input("Enter number of vertices: "))
+    print("Enter the adjacency list:")
+    adj_list = {}
+
+    for i in range(n):
+        neighbors = input(f"Neighbors of vertex {i} (space-separated): ").split()
+        adj_list[i] = list(map(int, neighbors))
+
+    if is_complete_graph(adj_list):
+        print("The graph is a Complete Graph.")
+    else:
+        print("The graph is NOT a Complete Graph.")
